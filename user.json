@@ -1,0 +1,9 @@
+{
+    "idUser": "134",
+    "nombreUser": "Javier Mendez Carpio",
+    "apikey_ia": "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",
+    "mod_ia": "gpt-3.5-turbo",
+    "max_token_ia": "500",
+    "temperatura_ia": "0.5",
+    "admin_ia": "1"
+}
