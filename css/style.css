@@ -6,7 +6,8 @@ b{
 }
 .accordion{
   /* width: 450px; */
-  height: 51px;
+  /* height: 51px; */
+  height: 35px;
   margin: 0 auto;
   background: #fff;
   border-radius: 3px;

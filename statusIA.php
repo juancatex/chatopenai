@@ -1,7 +1,7 @@
 <?php
  if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	require_once(__DIR__ . '/openai/GetCredentials.php');
-	 $db = new GetCredentials('http://localhost/ai/json2.php');
+	 $db = new GetCredentials('http://localhost/ai_openroute/json2.php');
 			    try {
 					$outrerult=$db->get();
 					if(!is_object($outrerult)){
@@ -22,7 +22,7 @@
 													<div class="header_img">
 													<img src="logo.jpg" />
 													</div>
-													<span id="chat_head">Asistente</span> <br> <span class="agent"></span> <span class="online">(Online)</span>
+													<span id="chat_head">Vet.y</span> <br> <span class="agent"></span> <span class="online">(Online)</span>
 													<span id="chat_fullscreen_loader" class="chat_fullscreen_loader"><i
 														class="fullscreen zmdi zmdi-window-maximize"></i></span>
 													<span id="chat_details"  class="chat_fullscreen_loader" style="margin-right: 3px !important;"><i

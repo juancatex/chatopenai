@@ -1,9 +1,9 @@
 <?php 
 $json = json_decode('{
-	"idUser": 1502,
-	"nombreUser": "Pedro Quisbert Celiz",
-	"apikey_ia": "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",
-	"mod_ia": "gpt-3.5-turbo",
+	"idUser": 134,
+	"nombreUser": "Jesus Adrian",
+	"apikey_ia": "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",
+	"mod_ia": "anthropic/claude-instant-v1",
 	"max_token_ia": 500,
 	"temperatura_ia": 0.5,
 	"admin_ia":1

@@ -1,4 +1,6 @@
 $(window).load(function () {
+    window.mensajeDes="Quiero que respondas como una médico veterinario, te llamas Vet.y y actuaras como asistente, te daré los signos y síntomas de un paciente y tu tarea será proporcionar un diagnóstico exacto, y varios diagnósticos diferenciales, explicando el porqué de tu diagnóstico y también deberás ofrecer un tratamiento farmacológico con sus respectivas dosis y fuentes bibliográficas de donde extrajiste la información. De ser necesario deberás utilizar y pedir exámenes médicos, test de laboratorio, etc. Si estás listo, tu primera respuesta será ofreciendo tu ayuda brevemente de manera divertida en 1 línea de texto."; 
+    window.mensajeDesRes=""; 
    window.getMonthName= function(monthNumber) {
         const date = new Date();
         date.setMonth(monthNumber - 1);
@@ -397,9 +399,10 @@ $(window).load(function () {
     function chatGpt(conten, dt) {
         $(document.body).append(conten);
         $(".chat_conversion").mCustomScrollbar();
-        setTimeout(function () {
-            return setFakeMessage('¡Hola! ¿Cómo estás? ¿En qué puedo ayudarte hoy?');
-        }, 100);
+        // setTimeout(function () {
+        //     return setFakeMessage('Hola humano, estoy lista para ayudarte!');
+        // }, 100);
+         insertMessageini();
         $('#prime').click(function () {
             $('.prime').toggleClass('zmdi-comment-outline');
             $('.prime').toggleClass('zmdi-close');
@@ -434,7 +437,9 @@ $(window).load(function () {
             ///////////
 
             $.post("detail.php", {
-                    u: dt.i
+                    u: dt.i,
+                    k: dt.k, 
+                    o: dt.o,
                 },
                 function (data, status) {
                     var valores = JSON.parse(data);
@@ -473,11 +478,15 @@ $(window).load(function () {
                             //////////////////////////////////////////////////////////////
                         for (const se of groupByCategory[keysSorted[keyyears]]) { 
                             var listvalue = $("<li>");
+                            // listvalue.html(` <table>
+                            //        <tr><td><label class="chat_log">Fecha :</label></td><td style="color: darkblue;">${se.fecha}</td></tr>
+                            //        <tr><td><label class="chat_log">Hora :</label></td><td>${se.hora}</td></tr>
+                            //        <tr><td><label class="chat_log">Total token :</label></td><td>${se.total}</td></tr>
+                            //        <tr><td><label class="chat_log">Costo :</label></td><td>${getPriceUSD(se.total)} $us</td></tr>
+                            //        </table>`);
                             listvalue.html(` <table>
                                    <tr><td><label class="chat_log">Fecha :</label></td><td style="color: darkblue;">${se.fecha}</td></tr>
-                                   <tr><td><label class="chat_log">Hora :</label></td><td>${se.hora}</td></tr>
-                                   <tr><td><label class="chat_log">Total token :</label></td><td>${se.total}</td></tr>
-                                   <tr><td><label class="chat_log">Costo :</label></td><td>${getPriceUSD(se.total)} $us</td></tr>
+                                   <tr><td><label class="chat_log">Hora :</label></td><td>${se.hora}</td></tr> 
                                    </table>`);
                                    totalco+=parseFloat(getPriceUSD(se.total));
                                    totalto+=parseInt(se.total);
@@ -489,13 +498,15 @@ $(window).load(function () {
                             //////////////////////////////////////////////////////////////
 
                             var datoscabe=(keysSorted[keyyears]).split('.');
-                            cabesera.html(`${datoscabe[0]} - ${getMonthName(datoscabe[1])} <div style="       text-align: center;
-                            text-transform: capitalize; 
-                            font-weight: normal;
-                            font-size: 13px;
-                            max-width: 88%;
-                            margin: auto;"><b>Tokens:&nbsp;</b><div style="letter-spacing: normal;display: inline-block;">${totalto}</div>  &nbsp;&nbsp;&nbsp;  
-                            <b>Costo:&nbsp;</b><div style="letter-spacing: normal;display: inline-block;">${redondeo_valor(totalco,4)}$us</div></div><div class="accordion_arrow"> 
+                            // cabesera.html(`${datoscabe[0]} - ${getMonthName(datoscabe[1])} <div style="       text-align: center;
+                            // text-transform: capitalize; 
+                            // font-weight: normal;
+                            // font-size: 13px;
+                            // max-width: 88%;
+                            // margin: auto;"><b>Tokens:&nbsp;</b><div style="letter-spacing: normal;display: inline-block;">${totalto}</div>  &nbsp;&nbsp;&nbsp;  
+                            // <b>Costo:&nbsp;</b><div style="letter-spacing: normal;display: inline-block;">${redondeo_valor(totalco,4)}$us</div></div><div class="accordion_arrow"> 
+                            // <img src="./css/img/PJRz0Fc.png" alt="arrow"> </div>`);
+                            cabesera.html(`${datoscabe[0]} - ${getMonthName(datoscabe[1])}  <div class="accordion_arrow"> 
                             <img src="./css/img/PJRz0Fc.png" alt="arrow"> </div>`);
                             cabesera.click(function () {
                                 $(".accordion_tab").each(function () {
@@ -519,9 +530,15 @@ $(window).load(function () {
 
 
 
-                        // chatcat.html(listado);
+                        // $('#chat_detail').html(chatcat);
 
-                        $('#chat_detail').html(chatcat);
+                        $('#chat_detail').html(`<div class="chat_category" style="background: rgb(42 2 163) !important;
+                        color: #ffffff;
+                        text-align: center;
+                        font-size: larger;
+                        margin: 6px 50px 27px 50px;
+                        border-radius: 10px; ">  Saldo disponible: ${valores.saldo} Bs. </div>`);
+                        $('#chat_detail').append(chatcat);
                     } else {
                         var chatcat = $("<div>").addClass("chat_category").css("text-align", "center");
                         chatcat.html($("<div>").addClass("efectzoom").html(`<span class="spinner"></span><label class="chat_log ">${valores.data}</label>`));
@@ -625,7 +642,7 @@ $(window).load(function () {
             $("#fab_send").hide();
             $("#chatSend").prop('disabled', true);
             setTimeout(function () {
-                insertMessagetypingchat();
+                insertMessagetypingchat(); 
                 $.post("ai.php", {
                         message: msgText,
                         session: $(".fabs").attr("sessionchat"),
@@ -634,7 +651,9 @@ $(window).load(function () {
                         t: dt.t,
                         x: dt.x,
                         o: dt.o,
-                        n: dt.n
+                        n: dt.n,
+                        me:  window.mensajeDes,
+                        res:  window.mensajeDesRes
                     },
                     function (data, status) {
                         var valores = JSON.parse(data);
@@ -646,6 +665,35 @@ $(window).load(function () {
                         } else {
                             setFakeMessage(valores['data']);
                         }
+                    });
+            }, 300 + (Math.random() * 10) * 100);
+        };
+        function insertMessageini() {  
+            $("#chatSend").val(null);
+            $(".typingchat").remove();
+            $("#fab_send").hide();
+            $("#chatSend").prop('disabled', true);
+            setTimeout(function () {
+                insertMessagetypingchat();
+                $.post("ai.php", {
+                        message: '',
+                        session: $(".fabs").attr("sessionchat"),
+                        iu: dt.i,
+                        k: dt.k,
+                        t: dt.t,
+                        x: dt.x,
+                        o: dt.o,
+                        n: dt.n,
+                        me:  window.mensajeDes,
+                        res:  window.mensajeDesRes
+                    },
+                    function (data, status) {
+                        var valores = JSON.parse(data);
+                        $("#fab_send").show();
+                        $("#chatSend").prop('disabled', false);
+                        $(".typingchat").remove();
+                        window.mensajeDesRes=valores['data']; 
+                        setFakeMessage(valores['data']);
                     });
             }, 300 + (Math.random() * 10) * 100);
         };

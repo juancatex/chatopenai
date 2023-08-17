@@ -57,7 +57,7 @@ CREATE TABLE `completions` (
   `idcompletion` varchar(100) DEFAULT NULL,
   `cmodel` varchar(20) NOT NULL,
   `status` tinyint(4) DEFAULT 0,
-  `idpayin` int(11) DEFAULT NULL,
+  `idpayin` int(11) DEFAULT 0,
   `log` varchar(1000) DEFAULT NULL,
   `flog` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
